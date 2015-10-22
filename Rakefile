@@ -4,7 +4,7 @@ require 'ostruct'
 # Note the syntax required to get the arguments into the program without Rake
 # trying to process them is as per the following example:
 #
-# rake options -- '-b=my_bucket' '--profile=my_profile'
+# rake options -- '-bmy_bucket' '--profile=my_profile'
 #
 # i.e. the -- must be specified to indicate the presence of the options and the option
 # switches with their respective values must be quoted and the assignment operator needs
@@ -29,15 +29,15 @@ task :options do
     opts.separator ""
     opts.separator "Available command line override options are as per the following:"
 
-    opts.on("-bARG", "--bucket=ARG" , "Specify the bucket name") do |b|
+    opts.on("-b", "--bucket ARGUMENT" , "Specify the bucket name") do |b|
 	    options.bucket_name = b
 	  end
 
-    opts.on("-pARG", "--profile=ARG", "Specify the AWS profile name") do |p|
+    opts.on("-p", "--profile ARGUMENT", "Specify the AWS profile name") do |p|
       options.aws_profile_name = p
     end
 
-    opts.on("-rARG", "--region=ARG", "Specify the AWS region") do |r|
+    opts.on("-r", "--region ARGUMENT", "Specify the AWS region") do |r|
       options.aws_region = r
     end
 
