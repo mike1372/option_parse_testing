@@ -4,16 +4,16 @@ require 'ostruct'
 # Note the syntax required to get the arguments into the program without Rake
 # trying to process them is as per the following example:
 #
-# rake options -- '-bmy_bucket' '--profile=my_profile'
+# rake options -- -b my_bucket --profile my_profile
 #
-# i.e. the -- must be specified to indicate the presence of the options and the option
-# switches with their respective values must be quoted and the assignment operator needs
-# to be used between the switch and its value
+# i.e. the -- must be specified to indicate the presence of the options 
 #
-# If specifying additional rake options they ened to be specified prior to the --
-# Additional rake tasks can be placed eithert side of the 'options' options
+# Therefore additiona tasks and Rake options must not be interleaved with the
+# option switches and arguments
 
 task :options do
+	# This line resets the ARGS to nil values so that Rake does not try and process them
+	ARGV.each { |a| task a.to_sym do ; end }
 	p ARGV
 	puts
 	# These shifts are needed to get OptionParser to start processing the arguments
@@ -24,7 +24,7 @@ task :options do
 	ARGV.shift
 	
   options = OpenStruct.new
-  OptionParser.new do |opts|
+  optparse = OptionParser.new do |opts|
     opts.banner = "Usage: cfn-dsl bootstrap:"
     opts.separator ""
     opts.separator "Available command line override options are as per the following:"
@@ -45,8 +45,9 @@ task :options do
       puts opts
       exit(0)
     end
+  end
 
-  end.parse!
+  optparse.parse!
 
   puts options
   p ARGV # Will only output (unused) arguments if they have not been matched above
