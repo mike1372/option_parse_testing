@@ -1,6 +1,5 @@
 require 'optparse'
 require 'ostruct'
-require 'pry'
 
 # Note the syntax required to get the arguments into the program without Rake
 # trying to process them is as per the following example:
